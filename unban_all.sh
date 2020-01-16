@@ -35,6 +35,16 @@ function unban_all {
 	# sudo ufw delete 1
 
 	sudo fail2ban-client set recidive unbanip 10.11.4.13
+
+
+
+	sudo fail2ban-client set apache-dos unbanip 10.11.4.13
+
+	sudo fail2ban-client set recidive unbanip 10.11.4.13
+
 }
 
 unban_all
+
+ab -n 1000 -c 20 http://10.11.88.88/
+slowloris 10.11.88.88 -s 500 --sleeptime 3
