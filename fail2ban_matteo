@@ -1,0 +1,16 @@
+[sshd]
+enabled = true
+# banaction = ufw
+maxretry = 2
+findtime = 60
+bantime = 1800
+
+[DEFAULT]
+destmail = test@gmail.com
+sender = test@test.com
+
+[recidive]
+enabled = true
+banaction = ufw
+bantime = -1
+maxretry = 1
