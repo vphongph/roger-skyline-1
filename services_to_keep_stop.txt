@@ -1,0 +1,26 @@
+autovt@.service				->  to keep -> tty, virtual term, from debian.org, link à getty, FAILED TO REBOOT
+console-setup.service		-> seems OK ? langues and clavier Window AltGr
+getty@.service				-> get console, up to 6, ssh ok but not from v, FAILED TO REBOOT
+keyboard-setup.service		-> ralentit pas mal de systeme, mais rien trouvé sur sa criticité, seems OK, WIN 376ms
+systemd-timesyncd.service	-> sync time avec serveur NTP, peut-etre à remettre pour mail, BOOT OK, remis, seems important
+remote-fs.target			-> manage dependecies with SysV, BOOT OK, but seems not safe
+apt-daily-upgrade.timer		-> seems ok, counter + auto update, will updte manually
+apt-daily.timer				-> seems ok, counter + auto update, will updte manually
+logrotate.timer				-> timer for logrotate -> simplify log file, sort by time and size with suffix, useful for debugging
+man-db.timer				-> update man page cache, OK 
+
+
+
+
+
+
+
+
+iptables
+
+iptables -N SSHATTACK
+iptables -A SSHATTACK -j LOG --log-prefix "Possible SSH attack! " --log-level 7
+iptables -A SSHATTACK -j DROP
+
+iptables -A INPUT -i eth0 -p tcp -m state --dport 22 --state NEW -m recent --set
+iptables -A INPUT -i eth0 -p tcp -m state --dport 22 --state NEW -m recent --update --seconds 120 --hitcount 4 -j SSHATTACK
